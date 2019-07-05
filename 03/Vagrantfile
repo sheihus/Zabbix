@@ -1,0 +1,27 @@
+Vagrant.configure("2") do |config|
+    config.vm.box = "sbeliakou-centos-7.3-x86_64-minimal.box"
+    config.vm.box_check_update = false
+  
+    config.vm.provider "virtualbox" do |vb|
+	vb.memory = "512"
+    end
+
+    config.vm.define "zserver" do |zs| 
+	zs.vm.network "private_network", ip: "192.168.56.100"
+	zs.vm.hostname = "zserver"
+	zs.vm.provision "file", source: "./.password", destination: "/home/vagrant/"
+	zs.vm.provision "file", source: "./functions", destination: "/home/vagrant/"
+	zs.vm.provision "shell", path: "zserver-install.sh"
+    end
+
+
+    config.vm.define "zagent" do |za| 
+	za.vm.network "private_network", ip: "192.168.56.101"
+	za.vm.hostname = "zagent"
+	za.vm.provision "file", source: "./TestApp.war", destination: "/home/vagrant/"
+	za.vm.provision "file", source: "./tomcat.service", destination: "/home/vagrant/"
+	za.vm.provision "file", source: "./functions", destination: "/home/vagrant/"
+	za.vm.provision "shell", path: "zagent-install.sh"
+    end
+    
+end  
