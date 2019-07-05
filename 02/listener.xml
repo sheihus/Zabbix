@@ -1,0 +1,1 @@
+<Listener className="org.apache.catalina.mbeans.JmxRemoteLifecycleListener" rmiRegistryPortPlatform="8097" rmiServerPortPlatform="8098" rmiBindAddress="192.168.56.101"/>
