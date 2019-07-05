@@ -17,8 +17,6 @@ for p in ${packets[@]}
 
 AGENT_CONF_FILE='/etc/zabbix/zabbix_agentd.conf'
 
-bl='^[[:blank:]]*'
-tl='.*'
 PATTERN_1=$bl'PidFile='$tl
 PATTERN_2=$bl'LogFile='$tl
 PATTERN_3=$bl'DebugLevel='$tl
@@ -91,9 +89,13 @@ cp catalina-jmx-remote.jar /opt/tomcat/lib/
 cp setenv.sh /opt/tomcat/bin/
 chmod 755 /opt/tomcat/bin/setenv.sh
 
+# listenet setup
+sed -i '/8005/r /home/vagrant/listener.xml' /opt/tomcat/conf/server.xml
+
 
 # deploying war application
 cp TestApp.war /opt/tomcat/webapps/
+
 
 
 #wget http://central.maven.org/maven2/com/google/code/gson/gson/2.8.1/gson-2.8.1.jar
@@ -116,4 +118,4 @@ pip install requests
 pip install simplejson
 
 
-python /home/vagrant/script.py
+#python /home/vagrant/script.py
